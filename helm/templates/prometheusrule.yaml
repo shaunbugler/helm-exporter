@@ -20,5 +20,5 @@ spec:
           labels:
             severity: warning
           annotations:
-            summary: "Chart {{ "{{ $labels.chart }}" }} in {{ "{{ $labels.namespace }}" }} installed version {{ "{{ $labels.version }}" }} has update version {{ "{{ $labels.latestVersion }}" }}"
+            summary: "Chart {{ $labels.chart }} in {{ $labels.namespace }} installed version {{ $labels.version }} has update version {{ $labels.latestVersion }} "
             description: This alert is fired when a chart is outdated
