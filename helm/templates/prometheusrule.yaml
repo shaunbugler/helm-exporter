@@ -1,0 +1,24 @@
+{{- if and .Values.prometheusRule.enabled -}}
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: {{ include "k8up.fullname" . }}-rule
+  namespace: {{ default .Release.Namespace .Values.prometheusRule.namespace }}
+  labels:
+    {{- include "helm-exporter.labels" . | nindent 4 }}
+    {{- with .Values.prometheusRule.additionalLabels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  groups:
+    - name: HelmExporter
+      rules:
+        {{- if .Values.prometheusRule.createDefaultRules }}
+        - alert: HelmChartOutOfDate
+          expr: helm_chart_outdated > 0
+          for: 1d
+          labels:
+            severity: warning
+          annotations:
+            summary: Chart {{ $labels.chart }} in {{ $labels.namespace }} installed version {{ $labels.version }} has update version {{ $labels.latestVersion }}
+            description: This alert is fired when a chart is outdated
