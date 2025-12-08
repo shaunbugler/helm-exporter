@@ -2,7 +2,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: {{ include "k8up.fullname" . }}-rule
+  name: {{ include "helm-exporter.fullname" . }}-rule
   namespace: {{ default .Release.Namespace .Values.prometheusRule.namespace }}
   labels:
     {{- include "helm-exporter.labels" . | nindent 4 }}
@@ -23,3 +23,4 @@ spec:
             summary: "Chart {{ "{{ $labels.chart }}" }} in {{ "{{ $labels.namespace }}" }} installed version {{ "{{ $labels.version }}" }} has update version {{ "{{ $labels.latestVersion }}" }}"
             description: This alert is fired when a chart is outdated
         {{- end }}
+{{- end }}
