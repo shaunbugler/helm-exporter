@@ -138,7 +138,7 @@ data:
           ],
           "targets": [
             {
-              "expr": "helm_chart_outdated",
+              "expr": "min(helm_chart_outdated{chart=~\"$chart\", namespace=~\"$namespace\", release=~\"$release\"}) by (chart, release, namespace, version, latestVersion) == 1",
               "format": "table",
               "instant": true,
               "intervalFactor": 1,
