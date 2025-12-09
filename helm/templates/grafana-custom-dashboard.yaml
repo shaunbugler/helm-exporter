@@ -4,7 +4,7 @@ kind: ConfigMap
 metadata:
   labels:
     grafana_dashboard: "1"
-  name: grafana-helm-exporter
+  name: grafana-helm-exporter-outdated
   {{- if .Values.grafanaDashboard.namespace }}
   namespace: {{ .Values.grafanaDashboard.namespace }}
   {{- else }}
@@ -15,7 +15,7 @@ metadata:
     {{- toYaml . | nindent 4 }}
     {{- end }}
 data:
-  grafana-helm-exporter.json: |-
+  grafana-helm-exporter-outdayed.json: |-
     {
       "annotations": {
         "list": [
@@ -138,14 +138,14 @@ data:
           ],
           "targets": [
             {
-              "expr": "min(helm_chart_info{chart=~\"$chart\", namespace=~\"$namespace\", release=~\"$release\"}) by (chart, release, namespace, version) != 2",
+              "expr": "helm_chart_outdated",
               "format": "table",
               "instant": true,
               "intervalFactor": 1,
               "refId": "A"
             }
           ],
-          "title": "Helm Releases",
+          "title": "Outdated Helm Charts",
           "transform": "table",
           "type": "table"
         }
@@ -172,7 +172,7 @@ data:
             "multi": false,
             "name": "chart",
             "options": [],
-            "query": "label_values(helm_chart_info, chart)",
+            "query": "label_values(helm_chart_outdated, chart)",
             "refresh": 1,
             "regex": "",
             "skipUrlSync": false,
@@ -197,7 +197,7 @@ data:
             "multi": false,
             "name": "release",
             "options": [],
-            "query": "label_values(helm_chart_info, release)",
+            "query": "label_values(helm_chart_outdated, release)",
             "refresh": 1,
             "regex": "",
             "skipUrlSync": false,
@@ -222,7 +222,7 @@ data:
             "multi": false,
             "name": "namespace",
             "options": [],
-            "query": "label_values(helm_chart_info, namespace)",
+            "query": "label_values(helm_chart_outdated, namespace)",
             "refresh": 1,
             "regex": "",
             "skipUrlSync": false,
@@ -265,7 +265,7 @@ data:
         ]
       },
       "timezone": "",
-      "title": "Helm Releases",
+      "title": "Outdated Helm Charts",
       "uid": "Gqncyvfmz",
       "version": 1
     }
