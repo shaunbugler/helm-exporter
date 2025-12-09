@@ -20,7 +20,8 @@ spec:
           labels:
             severity: warning
           annotations:
-            summary: "Chart {{ "{{ $labels.chart }}" }} in {{ "{{ $labels.namespace }}" }} installed version {{ "{{ $labels.version }}" }} has update version {{ "{{ $labels.latestVersion }}" }}"
+            summary: "Newer release of chart {{ "{{ $labels.chart }}" }} is available"
             description: This alert is fired when a chart is outdated
+            message: "App {{ "{{ $labels.release }}" }} installed with chart {{ "{{ $labels.chart }}" }} in namespace {{ "{{ $labels.namespace }}" }} currently is version {{ "{{ $labels.version }}" }}. A new version {{ "{{ $labels.latestVersion }}" }} has recently been released, consider upgrading"
         {{- end }}
 {{- end }}
