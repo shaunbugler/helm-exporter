@@ -16,7 +16,7 @@ spec:
         {{- if .Values.prometheusRule.createDefaultRules }}
         - alert: HelmChartOutOfDate
           expr: helm_chart_outdated > 0
-          for: 1d
+          for: 5m
           labels:
             severity: warning
           annotations:
